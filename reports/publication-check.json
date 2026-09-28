@@ -1,7 +1,7 @@
 {
   "project": "docsearch",
-  "text_files_checked": 34,
-  "history_blobs_checked": 10,
+  "text_files_checked": 35,
+  "history_blobs_checked": 39,
   "findings": [],
   "limitations": "Pattern-based check, not proof of absence of secrets. Authored sample data and source licenses reviewed separately."
 }
