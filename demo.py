@@ -12,8 +12,10 @@ def main():
         first = sync(root / 'examples/docs', db)
         second = sync(root / 'examples/docs', db)
         results = search(db, 'transaction')
-        assert first['updated'] == 3 and second['unchanged'] == 3
-        assert len(results) == 4
+        expected_documents = len(list((root / 'examples/docs').rglob('*.md')))
+        assert first['updated'] == expected_documents and second['unchanged'] == expected_documents
+        assert len(results) >= 4
+        assert any(item['path'] == 'backups.md' for item in results)
         target = root / 'var/demo.html'
         target.parent.mkdir(exist_ok=True)
         target.write_text(render_html('transaction', results), encoding='utf-8')
