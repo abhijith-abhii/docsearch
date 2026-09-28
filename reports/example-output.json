@@ -1,0 +1,50 @@
+{
+  "answer": "# Backup policy\n\nThe backup retention period is 14 days. [backups.md:1\u20134]\n\nEach database backup is encrypted at rest. [backups.md:1\u20134]\n\nA backup failure pages the on-call engineer after two consecutive failed runs. [backups.md:1\u20134]",
+  "details": {
+    "model": null,
+    "question": "How long is the backup retention period?",
+    "sources": [
+      {
+        "body": "# Backup policy\n\nThe backup retention period is 14 days. Each database backup is encrypted at rest. Backups run every day at 02:00 UTC. A backup failure pages the on-call engineer after two consecutive failed runs.\n",
+        "end_line": 4,
+        "excerpt": "# [Backup] policy\n\nThe [backup] retention period is 14 days. Each database [backup] is encrypted at rest. Backups run every day at 02:00 UTC \u2026 ",
+        "heading": "Backup policy",
+        "matches": 3,
+        "path": "backups.md",
+        "rank": -2.8550116019255656,
+        "start_line": 1
+      },
+      {
+        "body": "## Recovery\n\nBefore restoring a backup, stop all writers. Restore to a new database instance and verify row counts and the latest committed transaction. Switch traffic only after the verification checks pass. The illustrative recovery time objective is 30 minutes; this policy is not evidence that the objective has been achieved.",
+        "end_line": 7,
+        "excerpt": "## Recovery\n\nBefore restoring a [backup], stop all writers. Restore to a new database instance and verify row counts and the latest committed transaction. Switch \u2026 ",
+        "heading": "Recovery",
+        "matches": 1,
+        "path": "backups.md",
+        "rank": -1.2215997822908353,
+        "start_line": 5
+      }
+    ]
+  },
+  "metrics": {
+    "Engine": "extractive",
+    "Retrieved passages": 2
+  },
+  "notice": "Deterministic extractive answer: source sentences, not language-model output.",
+  "rows": [
+    {
+      "end_line": 4,
+      "heading": "Backup policy",
+      "matches": 3,
+      "path": "backups.md",
+      "start_line": 1
+    },
+    {
+      "end_line": 7,
+      "heading": "Recovery",
+      "matches": 1,
+      "path": "backups.md",
+      "start_line": 5
+    }
+  ]
+}

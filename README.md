@@ -1,66 +1,69 @@
-# DocSearch
+# DocSearch Atlas
 
-Search a local documentation folder with ranked passages, excerpts, relative file paths, and source line ranges. DocSearch uses SQLite FTS5's BM25 ranking, gives headings extra weight, and updates only changed documents. It can export an offline HTML results page.
+Answer engineering runbook questions with evidence for **on-call engineers**.
 
-**Status:** Implemented local portfolio project created with Codex during this task. It performs keyword retrieval without generating answers or sending documents to a service. Read the [engineering and interview notes](ENGINEERING.md).
+Original topic: **Domain-Specific RAG Application** from [the source post](https://www.instagram.com/p/DdyMaogE4ud/).
 
-## Quick start
+> Local portfolio implementation developed with Codex assistance. Measured results and limitations are documented; no production adoption, revenue or hiring outcome is claimed.
 
-Prerequisites: Python 3.11 or newer, with SQLite compiled with FTS5. No third-party Python packages, model downloads, accounts, API keys, or environment variables are needed. Run commands from this folder; use `python3` where appropriate.
+![Application screenshot](reports/screenshots/app.png)
+
+## What works
+
+- Incremental retrieval
+- citations
+- grounded answer composition
+- optional local LLM
+
+[Example output](reports/example-output.json) · [Recorded checks](reports/test-results.txt) · [Learning and interview guide](LEARNING_GUIDE.md)
+
+## Start
+
+Python 3.12 is the validated Python runtime. Run commands from this repository directory. Windows users activate `.venv\Scripts\activate` instead of `source`.
 
 ```sh
-python --version
-python -c "import sqlite3; c=sqlite3.connect(':memory:'); c.execute('CREATE VIRTUAL TABLE check_fts USING fts5(text)'); print('FTS5 available')"
-python demo.py
-python -m unittest discover -s tests -v
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python app.py
 ```
 
-The demo indexes three synthetic documents, verifies that a second run changes none, and finds four passages containing `transaction`. Open `var/demo.html` in a browser to view the report.
+Open **http://127.0.0.1:8080**. Keep the process running. Set `PORT` to use another port (Retention Studio uses `--port`). The Python development servers are intended for local demonstrations.
 
-For persistent use:
+For actual local model inference, run `python download_model.py` once, then select the local language-model option. The default non-model mode is clearly labeled. Downloaded weights stay under ignored `var/model/`. No paid API is needed.
 
-```sh
-python docsearch.py --db var/search.db index examples/docs
-python docsearch.py --db var/search.db search "lease token"
-python docsearch.py --db var/search.db search "transaction" --html var/results.html
-```
+## Demonstration
 
-Run `index` again after adding, changing, or deleting a document. The database belongs to one source root; use another database to index a different root. The FTS5 capability check above gives a concrete error if your Python distribution lacks FTS5; use a Python distribution that includes it.
+Ask about backup retention in extractive mode, inspect the cited source, then download the model and compare local-llm mode. Try an unrelated question and inspect the no-evidence response.
 
-## Implemented behavior
+## Architecture and decisions
 
-- UTF-8 Markdown, text, and reStructuredText files up to 1 MiB each.
-- Passages split at Markdown headings or a 60-line boundary.
-- Incremental indexing using content hashes and a single transaction.
-- Removal of deleted or newly excluded files from search results.
-- SQLite BM25 ranking with higher heading weight and deterministic tie-breaking.
-- Literal query terms joined with AND within one passage; punctuation is ignored.
-- Up to 100 results, limited query length, match excerpts, and indexed line ranges.
-- Escaped offline HTML with local source links and responsive layout.
+Browser controls → validated Flask API → project analysis/workflow → results and export.
 
-## Architecture
+Stack: SQLite FTS5 · Flask.
 
-```mermaid
-flowchart LR
-    Docs[Documentation folder] --> Scan[Allowed files and hashes]
-    Scan --> Chunk[Passages with source lines]
-    Chunk --> Index[(SQLite FTS5 index)]
-    Query[Literal query terms] --> Rank[BM25 ranking]
-    Index --> Rank
-    Rank --> JSON[JSON results]
-    Rank --> HTML[Offline HTML export]
-```
-
-## Privacy and configuration
-
-Choose a specific documentation folder with the `index` argument. Hidden files, hidden folders, common build/vendor directories, and symlinks are skipped. This is not a secret scanner: a credential placed in an ordinary Markdown document would be indexed. Use only the synthetic example folder for public demos.
-
-`--db` controls the database; `--limit` controls search results; `--html` creates an optional local export. No `.env` file is required. The index contains document text. HTML exports include excerpts and local file paths, so inspect them before sharing. Generated reports and databases are ignored by Git.
+1. Retain the existing incremental SQLite FTS5 engine and source line ranges.
+2. Separate extractive answers from actual local-language-model generation so the interface never disguises one as the other.
+3. Return retrieved passages and abstain on empty retrieval; generated answers remain reviewable against their context.
 
 ## Verification
 
-Tests cover source line ranges, incremental updates and deletion, excluded paths, literal query handling, HTML escaping, Unicode search, chunk boundaries, oversized/non-UTF-8 files, root isolation, and rollback after an injected storage failure. A GitHub Actions workflow is prepared; its remote execution is not yet verified.
+```sh
+python -m pytest -q
+```
 
-## Limitations
+See [VERIFICATION.md](VERIFICATION.md) for actual executed checks, setup verification, model/data results and any outstanding environment limitations. A workflow file alone is not evidence that CI passed.
 
-Ranking is provided by SQLite, not a custom BM25 implementation. There are no embeddings, semantic search, generated answers, PDF parsing, OCR, hosted service, authentication, or live filesystem watcher. `.rst` and `.txt` use the same line-based chunking and only recognize Markdown-style headings. Terms must appear in one passage; there is no stemming or cross-passage matching. Source line ranges describe the indexed snapshot and may become stale until reindexing. Local links open files but do not jump to the cited line. This is not hardened against malicious concurrent filesystem changes.
+## Data and attribution
+
+Authored runbooks; existing DocSearch code. See [DATA_AND_SOURCES.md](DATA_AND_SOURCES.md) for provenance and usage notes. Original project code is MIT unless a preserved source file or dependency states otherwise. Model and third-party data licenses remain separate.
+
+## Limitations and next improvement
+
+Small synthetic Markdown corpus; lexical retrieval is not semantic search. The small model can hallucinate, answer incorrectly, or follow malicious document instructions. Local demo documents are trusted; no secrets or tools are available to the model. Source citations identify retrieved context, not automatic claim verification.
+
+Suggested extension: Add a new runbook and a retrieval test that checks the expected source appears in the top three.
+
+## Honest portfolio use
+
+This implementation and documentation were developed with substantial Codex assistance. Before presenting it, run the demonstration, explain the design choices, and complete the suggested independent modification. Do not describe generated code as work experience, an accepted upstream contribution, or a deployed production service.

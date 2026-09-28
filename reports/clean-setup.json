@@ -1,0 +1,9 @@
+{
+  "slug": "docsearch",
+  "fresh_venv": "work/clean-envs/docsearch",
+  "fresh_checkout": "work/clean/docsearch",
+  "passed": true,
+  "failure": null,
+  "runtime": "Python 3.12.14",
+  "model_training": null
+}

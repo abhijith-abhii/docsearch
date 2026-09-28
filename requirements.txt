@@ -1,0 +1,5 @@
+Flask==3.1.2
+pytest==8.4.2
+torch==2.6.0
+transformers==4.48.3
+sentencepiece==0.2.0
