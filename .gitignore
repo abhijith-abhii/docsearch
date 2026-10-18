@@ -7,3 +7,4 @@ var/
 *.sqlite*
 .DS_Store
 node_modules/
+.benchmark-venv/

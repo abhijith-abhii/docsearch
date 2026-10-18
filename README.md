@@ -67,3 +67,7 @@ Suggested extension: Add a new runbook and a retrieval test that checks the expe
 ## Honest portfolio use
 
 This implementation and documentation were developed with substantial Codex assistance. Before presenting it, run the demonstration, explain the design choices, and complete the suggested independent modification. Do not describe generated code as work experience, an accepted upstream contribution, or a deployed production service.
+
+## Local performance measurements
+
+On 1,000 synthetic documents, unchanged incremental indexing took 39.438 ms versus 752.459 ms for a full rebuild: **94.76% less time** across 7 paired local trials. An 8-client local HTTP workload completed **2,400 validated requests**, with **42.940 ms p95 latency**. These are synthetic local measurements, not production users or service guarantees. See the [workload, reproducible script and complete results](benchmarks/README.md).

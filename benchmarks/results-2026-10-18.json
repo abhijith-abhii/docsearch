@@ -1,0 +1,106 @@
+{
+  "date_utc": "2026-10-18T10:35:53.307798+00:00",
+  "project": "docsearch",
+  "source_commit": "d5b3d7b6cbde94ce752197cf3cfd47e8d9590a24",
+  "environment": {
+    "os": "Darwin",
+    "os_release": "25.2.0",
+    "architecture": "arm64",
+    "python": "3.12.14",
+    "cpu_count": 12,
+    "server": "Gunicorn 23.0.0, 1 gthread worker, 8 threads"
+  },
+  "scope": "Synthetic local loopback HTTP benchmark. Not production capacity, real users, clinical validation or user growth.",
+  "concurrency": 8,
+  "requests_per_round": 800,
+  "rounds": 3,
+  "warmup_requests": 40,
+  "workload": "Source-linked extractive question answering over 5 bundled runbooks. Local-model generation excluded.",
+  "http_rounds": [
+    {
+      "count": 800,
+      "median_ms": 5.685,
+      "p95_ms": 39.174,
+      "min_ms": 1.457,
+      "max_ms": 471.445,
+      "elapsed_seconds": 1.506,
+      "requests_per_second": 531.24,
+      "failed_requests": 0
+    },
+    {
+      "count": 800,
+      "median_ms": 6.216,
+      "p95_ms": 43.486,
+      "min_ms": 1.441,
+      "max_ms": 972.307,
+      "elapsed_seconds": 1.61,
+      "requests_per_second": 496.75,
+      "failed_requests": 0
+    },
+    {
+      "count": 800,
+      "median_ms": 6.349,
+      "p95_ms": 45.064,
+      "min_ms": 1.377,
+      "max_ms": 768.456,
+      "elapsed_seconds": 1.622,
+      "requests_per_second": 493.08,
+      "failed_requests": 0
+    }
+  ],
+  "http_summary": {
+    "count": 2400,
+    "median_ms": 6.074,
+    "p95_ms": 42.94,
+    "min_ms": 1.377,
+    "max_ms": 972.307,
+    "median_round_requests_per_second": 496.75,
+    "failed_requests": 0,
+    "total_measured_requests": 2400
+  },
+  "index_comparison": {
+    "documents": 1000,
+    "passages": 9000,
+    "paired_repetitions": 7,
+    "full_rebuild_ms": [
+      750.1900419592857,
+      747.7725830394775,
+      752.4594578426331,
+      750.7237079553306,
+      766.8338750954717,
+      757.8501671086997,
+      771.7689999844879
+    ],
+    "unchanged_sync_ms": [
+      39.27300008945167,
+      38.54400012642145,
+      39.43829191848636,
+      42.104125022888184,
+      39.68412498943508,
+      38.50654209963977,
+      40.04808305762708
+    ],
+    "one_percent_changed_sync_ms": [
+      57.57062486372888,
+      58.41491697356105,
+      61.41266715712845,
+      61.23929191380739,
+      58.0187919549644,
+      60.86695799604058,
+      57.97379114665091
+    ],
+    "full_rebuild_median_ms": 752.459,
+    "unchanged_sync_median_ms": 39.438,
+    "one_percent_changed_median_ms": 58.415,
+    "unchanged_time_reduction_percent": 94.76,
+    "unchanged_speedup_ratio": 19.08,
+    "search_latency": {
+      "count": 300,
+      "median_ms": 0.714,
+      "p95_ms": 0.897,
+      "min_ms": 0.653,
+      "max_ms": 1.615
+    },
+    "comparison": "Same implementation and corpus: fresh full index vs digest-based unchanged sync. A feature comparison, not a historical before/after optimization. Local filesystem caches may affect both."
+  }
+}
