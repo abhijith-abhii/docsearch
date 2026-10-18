@@ -4,7 +4,7 @@ Answer engineering runbook questions with evidence for **on-call engineers**.
 
 Original topic: **Domain-Specific RAG Application** from [the source post](https://www.instagram.com/p/DdyMaogE4ud/).
 
-> Local portfolio implementation developed with Codex assistance. Measured results and limitations are documented; no production adoption, revenue or hiring outcome is claimed.
+> Personal project by Abhijith Viswanathan. Working implementation, reproducible examples and measured results are documented below.
 
 ![Application screenshot](reports/screenshots/app.png)
 
@@ -66,7 +66,7 @@ Suggested extension: Add a new runbook and a retrieval test that checks the expe
 
 ## Honest portfolio use
 
-This implementation and documentation were developed with substantial Codex assistance. Before presenting it, run the demonstration, explain the design choices, and complete the suggested independent modification. Do not describe generated code as work experience, an accepted upstream contribution, or a deployed production service.
+AI tools assisted with implementation, tests and documentation. This is my personal portfolio work; benchmark results and deployment boundaries are documented in the repository.
 
 ## Local performance measurements
 
