@@ -71,3 +71,7 @@ This implementation and documentation were developed with substantial Codex assi
 ## Local performance measurements
 
 On 1,000 synthetic documents, unchanged incremental indexing took 39.438 ms versus 752.459 ms for a full rebuild: **94.76% less time** across 7 paired local trials. An 8-client local HTTP workload completed **2,400 validated requests**, with **42.940 ms p95 latency**. These are synthetic local measurements, not production users or service guarantees. See the [workload, reproducible script and complete results](benchmarks/README.md).
+
+## Connect
+
+[LinkedIn — Abhijith Viswanathan](https://www.linkedin.com/in/abhijith-viswanathan-0a7216436/)
